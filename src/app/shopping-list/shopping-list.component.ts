@@ -25,6 +25,20 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
           this.ingredients = ingredients;
         }
       );
+    let ingredientMap = new Map();
+    this.ingredients.forEach(ingredient => {
+      if (ingredientMap.has(ingredient.name)) {
+        ingredientMap.set(ingredient.name, ingredientMap.get(ingredient.name)+ingredient.amount);
+      } else {
+        ingredientMap.set(ingredient.name, ingredient.amount);
+      }
+    });
+    let ingredients = [];
+    ingredientMap.forEach((value, key) => {
+      let ingredient = new Ingredient(key, value);
+      ingredients.push(ingredient);
+    });
+    this.ingredients = ingredients;
   }
 
   ngOnDestroy(): void {
